@@ -1,6 +1,8 @@
 package com.disword.diswordlib;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.disword.diswordlib.core.base.BaseActivity;
 
@@ -23,13 +25,18 @@ public class MainActivity extends BaseActivity {
         HashMap<String,String> map = new HashMap<>();
         map.put("aa","bb");
         map.put("cc","dd");
-        postJSON(url, map);
+        postJSON(url, map,0);
     }
 
     @Override
-    protected void httpCallback(String result, int code) {
+    protected void httpCallback(String result, int code,int taskId) {
         System.out.println("code = " + code);
         System.out.println("result = " + result);
         System.out.println("id = " + Thread.currentThread().getId());
+    }
+
+    public void swipeListView(View view) {
+        Intent intent = new Intent(this,SwipeListActivity.class);
+        startActivity(intent);
     }
 }

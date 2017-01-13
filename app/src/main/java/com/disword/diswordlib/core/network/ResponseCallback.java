@@ -7,5 +7,5 @@ package com.disword.diswordlib.core.network;
 public interface ResponseCallback {
     int SUCCESS = 666;
     int FAIL = 500;
-    void result(String result,int code);
+    void result(String result,int code,int taskId);
 }

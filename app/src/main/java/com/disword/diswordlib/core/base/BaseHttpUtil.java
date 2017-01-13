@@ -25,7 +25,8 @@ public class BaseHttpUtil {
     private final int retryTime = 2 * 1000;
     private final int retryCount = 5;
 
-    public final void get(Context context, String baseUrl, HashMap<String, String> params, final ResponseCallback callback) {
+    public final void get(Context context, String baseUrl, HashMap<String, String> params, final int taskId,
+                          final ResponseCallback callback) {
         String url = baseUrl + FormatUtil.combineURL(params);
         System.out.println("url = " + url);
         add(RxHttp.createGet(url)
@@ -35,19 +36,20 @@ public class BaseHttpUtil {
                     @Override
                     public void call(String s) {
                         if (callback != null)
-                            callback.result(s, ResponseCallback.SUCCESS);
+                            callback.result(s, ResponseCallback.SUCCESS,taskId);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         if (callback != null)
-                            callback.result("", ResponseCallback.FAIL);
+                            callback.result("", ResponseCallback.FAIL,taskId);
                     }
                 }));
     }
 
 
-    public final void postJSON(Context context, String baseUrl, HashMap<String, String> params, final ResponseCallback callback) {
+    public final void postJSON(Context context, String baseUrl, HashMap<String, String> params,final int taskId,
+                               final ResponseCallback callback) {
         System.out.println("url = " + baseUrl);
         String json = FormatUtil.combineJSON(params);
         add(RxHttp.createPostJSON(baseUrl, json)
@@ -57,13 +59,13 @@ public class BaseHttpUtil {
                     @Override
                     public void call(String s) {
                         if (callback != null)
-                            callback.result(s, ResponseCallback.SUCCESS);
+                            callback.result(s, ResponseCallback.SUCCESS,taskId);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
                         if (callback != null)
-                            callback.result("", ResponseCallback.FAIL);
+                            callback.result("", ResponseCallback.FAIL,taskId);
                     }
                 }));
     }

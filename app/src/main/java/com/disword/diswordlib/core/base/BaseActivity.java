@@ -12,34 +12,36 @@ import java.util.HashMap;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private BaseHttpUtil baseHttpUtil;
-    private synchronized BaseHttpUtil getHttpUtil(){
-        if(baseHttpUtil == null) {
+
+    private synchronized BaseHttpUtil getHttpUtil() {
+        if (baseHttpUtil == null) {
             baseHttpUtil = new BaseHttpUtil();
             callback = new ResponseCallback() {
                 @Override
-                public void result(String result, int code) {
-                    httpCallback(result,code);
+                public void result(String result, int code, int taskId) {
+                    httpCallback(result, code, taskId);
                 }
             };
         }
 
         return baseHttpUtil;
     }
-    public final void get(String baseUrl, HashMap<String, String> params) {
-        getHttpUtil().get(getApplicationContext(),baseUrl,params, callback);
+
+    public final void get(String baseUrl, HashMap<String, String> params, int taskId) {
+        getHttpUtil().get(getApplicationContext(), baseUrl, params, taskId, callback);
     }
 
-    public final void postJSON(String baseUrl, HashMap<String, String> params) {
-        getHttpUtil().postJSON(getApplicationContext(),baseUrl,params, callback);
+    public final void postJSON(String baseUrl, HashMap<String, String> params, int taskId) {
+        getHttpUtil().postJSON(getApplicationContext(), baseUrl, params, taskId, callback);
     }
 
     private ResponseCallback callback;
 
-    protected abstract void httpCallback(String result, int code);
+    protected abstract void httpCallback(String result, int code, int taskId);
 
     @Override
     protected void onDestroy() {
-        if(baseHttpUtil != null)
+        if (baseHttpUtil != null)
             baseHttpUtil.release();
         super.onDestroy();
     }
