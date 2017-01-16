@@ -4,11 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.disword.diswordlib.R;
 import com.disword.diswordlib.core.util.ViewHolderUtil;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by disword on 17/1/13.
  */
 
-public class SwipeAdapter extends BaseAdapter {
+public class SwipeAdapter extends BaseSwipeAdapter {
     private Context context;
     private List<String> list;
     private LayoutInflater mInflater;
@@ -45,28 +46,41 @@ public class SwipeAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
-        if (view == null)
-            view = mInflater.inflate(R.layout.listview_item, null);
-        TextView tv = ViewHolderUtil.get(view, R.id.content);
-        Button button = ViewHolderUtil.get(view, R.id.btnDelete);
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
 
-        tv.setText(list.get(i));
-        tv.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public View generateView(int position, ViewGroup parent) {
+        return mInflater.inflate(R.layout.listview_item, null);
+    }
+
+    @Override
+    public void fillValues(final int position, View convertView) {
+        SwipeLayout swipeLayout = ViewHolderUtil.get(convertView, getSwipeLayoutResourceId(position));
+        TextView text_data = ViewHolderUtil.get(convertView, R.id.text_data);
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "click " + i, Toast.LENGTH_SHORT).show();
+            public void onOpen(SwipeLayout layout) {
+
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "delete " + i, Toast.LENGTH_SHORT).show();
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
         });
-        return view;
+        convertView.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "click delete "+ position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        text_data.setText(list.get(position));
 
     }
+
 
 
 }

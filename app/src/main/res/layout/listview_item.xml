@@ -1,65 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.disword.diswordlib.core.widget.swipe.SwipeMenuLayout
+<?xml version="1.0" encoding="utf-8" ?>
+<com.daimajia.swipe.SwipeLayout
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:paddingBottom="1dp"
-    app:ios="true"
-    app:leftSwipe="true"
-    app:swipeEnable="true">
+    android:layout_height="wrap_content"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
 
-    <TextView
-        android:id="@+id/content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FF5534"
+        android:gravity="center"
+        android:tag="Bottom3"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/trash"
+            android:layout_width="27dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/trash" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Delete Item?"
+            android:textColor="#fff"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="4"
+            android:background="@drawable/white"
+            android:text="Yes,Delete"
+            android:textColor="#FF5534" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center"
-        />
+        android:background="@drawable/item_selector"
+        android:padding="10dp">
 
-    <!-- 以下都是侧滑菜单的内容依序排列 -->
-    <Button
-        android:id="@+id/btnTop"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:background="#d9dee4"
-        android:text="置顶"
-        android:textColor="@android:color/white"/>
-
-    <Button
-        android:id="@+id/btnUnRead"
-        android:layout_width="120dp"
-        android:layout_height="match_parent"
-        android:background="#ecd50a"
-        android:clickable="true"
-        android:text="标记未读"
-        android:textColor="@android:color/white"/>
-
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:background="@color/red"
-        android:text="删除"
-        android:textColor="@android:color/white"/>
-
-
-    <!--    <RelativeLayout
+        <TextView
+            android:id="@+id/position"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text_data"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="match_parent"
-            android:background="@color/red_ff4a57"
-            android:clickable="true">
-
-            <TextView
-                android:id="@+id/tv_delete"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/point_icon_delete"
-                android:gravity="center"
-                android:text="删除"
-                android:textColor="@android:color/white"/>
-        </RelativeLayout>-->
-
-</com.disword.diswordlib.core.widget.swipe.SwipeMenuLayout>
+            android:tag="Hover"
+            android:text="" />
+    </LinearLayout>
+</com.daimajia.swipe.SwipeLayout>

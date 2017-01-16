@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="Test" parent="android:style/Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
 </resources>

@@ -1,27 +1,34 @@
 package com.disword.diswordlib;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.disword.diswordlib.core.base.BaseActivity;
+import com.disword.diswordlib.core.data.ListManager;
+import com.disword.diswordlib.core.util.anim.TweenAnimUtil;
 import com.disword.diswordlib.core.widget.swipetoloadlayout.OnLoadMoreListener;
 import com.disword.diswordlib.core.widget.swipetoloadlayout.OnRefreshListener;
 import com.disword.diswordlib.core.widget.swipetoloadlayout.SwipeToLoadLayout;
 import com.disword.diswordlib.demo.SwipeAdapter;
+import com.disword.diswordlib.demo.SwipeListManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwipeListActivity extends AppCompatActivity {
+public class SwipeListActivity extends BaseActivity implements ListManager.ListCallback {
 
     private SwipeToLoadLayout swipeToLoadLayout;
     private SwipeAdapter mAdapter;
     private ListView listView;
+    private TextView tvEmpty;
     private List<String> list = new ArrayList<>();
-    private Handler handler = new Handler();
+    private SwipeListManager listManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +37,26 @@ public class SwipeListActivity extends AppCompatActivity {
 
         swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         listView = (ListView) findViewById(R.id.swipe_target);
+        tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+        initListView();
+    }
 
+    private void initListView() {
+        listManager = new SwipeListManager(1, this) {
+            @Override
+            public void onDataLoaded(String data) {
+                list.add(data);
+            }
+        };
 
         mAdapter = new SwipeAdapter(this, list);
         listView.setAdapter(mAdapter);
-        /**无效*/
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(SwipeListActivity.this,"position = " +i,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(SwipeListActivity.this,"click "+position,Toast.LENGTH_SHORT).show();
+            }
+        });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -58,40 +73,52 @@ public class SwipeListActivity extends AppCompatActivity {
             }
         });
 
-
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        list.clear();
-                        for (int i = 0; i < 30; i++) {
-                            list.add("item" + i);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        swipeToLoadLayout.setRefreshing(false);
-                    }
-                }, 1000);
+                listManager.refresh();
             }
         });
+
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        int len = list.size() + 1;
-                        for (int i = len; i < len + 30; i++) {
-                            list.add("item" + i);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        swipeToLoadLayout.setLoadingMore(false);
-                    }
-                }, 1000);
+                listManager.loadMore();
             }
         });
         swipeToLoadLayout.setRefreshing(true);
+
+    }
+
+
+
+    @Override
+    public void refreshList() {
+        if(list.size() > 0 && tvEmpty.getVisibility() == View.VISIBLE) {
+            TweenAnimUtil.hideAnim(tvEmpty,300);
+        }
+        mAdapter.notifyDataSetChanged();
+        swipeToLoadLayout.setRefreshing(false);
+        swipeToLoadLayout.setLoadingMore(false);
+    }
+
+    @Override
+    public void showNoData() {
+        TweenAnimUtil.showAnim(tvEmpty,300);
+    }
+
+    @Override
+    public void showNetworkError() {
+
+    }
+
+    @Override
+    public void reset() {
+        list.clear();
+    }
+
+    @Override
+    protected void httpCallback(String result, int code, int taskId) {
 
     }
 }

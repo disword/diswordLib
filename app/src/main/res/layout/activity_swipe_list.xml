@@ -1,24 +1,36 @@
-<com.disword.diswordlib.core.widget.swipetoloadlayout.SwipeToLoadLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeToLoadLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:swipe_style="classic">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@id/swipe_refresh_header"
-        layout="@layout/layout_twitter_header" />
-
-    <ListView
-        android:id="@id/swipe_target"
+    <TextView
+        android:id="@+id/tvEmpty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:divider="@null" />
+        android:gravity="center"
+        android:text="没有数据列表"
+        android:visibility="gone" />
 
-    <include
-        android:id="@id/swipe_load_more_footer"
-        layout="@layout/layout_classic_footer" />
+    <com.disword.diswordlib.core.widget.swipetoloadlayout.SwipeToLoadLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:swipe_style="classic">
 
-</com.disword.diswordlib.core.widget.swipetoloadlayout.SwipeToLoadLayout>
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/layout_twitter_header" />
+
+        <ListView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null" />
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/layout_classic_footer" />
+
+    </com.disword.diswordlib.core.widget.swipetoloadlayout.SwipeToLoadLayout>
+</FrameLayout>
