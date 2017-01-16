@@ -19,7 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SwipeListActivity" />
-        <activity android:name=".RxbindingActivity"></activity>
+        <activity android:name=".RxbindingActivity" />
+        <activity android:name=".demo.pages.IndexActivity" />
+        <activity
+            android:name=".demo.pages.auth.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

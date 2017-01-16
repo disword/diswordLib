@@ -1,6 +1,7 @@
 package com.disword.diswordlib.core.base;
 
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.disword.diswordlib.core.network.ResponseCallback;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private BaseHttpUtil baseHttpUtil;
+    private Toast mToast;
 
     private synchronized BaseHttpUtil getHttpUtil() {
         if (baseHttpUtil == null) {
@@ -43,6 +45,31 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         if (baseHttpUtil != null)
             baseHttpUtil.release();
+        cancelToast();
         super.onDestroy();
     }
+
+
+    public void showToast(String text) {
+        if(mToast == null) {
+            mToast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
+    }
+
+    public void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+    }
+
+    public void onBackPressed() {
+        cancelToast();
+        super.onBackPressed();
+    }
+
+
 }

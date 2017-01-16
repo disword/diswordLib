@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.disword.diswordlib.core.base.BaseActivity;
-
-import java.util.HashMap;
+import com.disword.diswordlib.demo.pages.IndexActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -19,13 +18,13 @@ public class MainActivity extends BaseActivity {
 //        HashMap<String,String> map = new HashMap<>();
 //        map.put("aa","bb");
 //        map.put("cc","dd");
-//        get(url, map);
+//        findView(url, map);
 
-        String url = "https://cieupas-a85f6.firebaseio.com/bug.json";
-        HashMap<String,String> map = new HashMap<>();
-        map.put("aa","bb");
-        map.put("cc","dd");
-        postJSON(url, map,0);
+//        String url = "https://cieupas-a85f6.firebaseio.com/bug.json";
+//        HashMap<String,String> map = new HashMap<>();
+//        map.put("aa","bb");
+//        map.put("cc","dd");
+//        postJSON(url, map,0);
     }
 
     @Override
@@ -42,6 +41,11 @@ public class MainActivity extends BaseActivity {
 
     public void rxbinding(View view) {
         Intent intent = new Intent(this,RxbindingActivity.class);
+        startActivity(intent);
+    }
+
+    public void normalPage(View view) {
+        Intent intent = new Intent(this,IndexActivity.class);
         startActivity(intent);
     }
 }

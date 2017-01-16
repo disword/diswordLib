@@ -44,7 +44,7 @@ public class RetryWithDelay implements Func1<Observable<? extends Throwable>, Ob
 
                         if (++retryCount <= maxRetries) {
                             // When this Observable calls onNext, the original Observable will be retried (i.e. re-subscribed).
-                            System.out.println("get error, it will try after " + retryDelayMillis * Math.pow(2, retryCount - 1)
+                            System.out.println("findView error, it will try after " + retryDelayMillis * Math.pow(2, retryCount - 1)
                                     + " millisecond, retry count " + retryCount);
                             return Observable.timer((long) (retryDelayMillis * Math.pow(2, retryCount - 1)),
                                     TimeUnit.MILLISECONDS);
