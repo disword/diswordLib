@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SwipeListActivity"></activity>
+        <activity android:name=".SwipeListActivity" />
+        <activity android:name=".RxbindingActivity"></activity>
     </application>
 
 </manifest>

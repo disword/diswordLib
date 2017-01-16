@@ -39,4 +39,9 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this,SwipeListActivity.class);
         startActivity(intent);
     }
+
+    public void rxbinding(View view) {
+        Intent intent = new Intent(this,RxbindingActivity.class);
+        startActivity(intent);
+    }
 }
