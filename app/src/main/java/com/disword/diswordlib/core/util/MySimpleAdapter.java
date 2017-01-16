@@ -65,7 +65,7 @@ public abstract class MySimpleAdapter<T> extends BaseAdapter {
 
 
     public static class SimpleViewHolder {
-        View itemView;
+        final View itemView;
         SparseArray<View> viewHolder;
 
         public SimpleViewHolder(View itemView) {
@@ -73,34 +73,34 @@ public abstract class MySimpleAdapter<T> extends BaseAdapter {
         }
 
         public void setText(int res, String info) {
-            View view = findView(itemView, res);
+            View view = findView(res);
             if (view instanceof TextView) {
                 ((TextView) view).setText(info);
             }
         }
 
         public void setImageResource(int res, int img){
-            View view = findView(itemView, res);
+            View view = findView(res);
             if (view instanceof ImageView) {
                 ((ImageView) view).setImageResource(img);
             }
         }
 
         public void setBackground(int res, int bg){
-            View view = findView(itemView, res);
+            View view = findView(res);
             if (view != null) {
                 view.setBackgroundResource(bg);
             }
         }
 
         @SuppressWarnings("unchecked")
-        public <T extends View> T findView(View view, int id) {
+        public <T extends View> T findView(int id) {
             if(viewHolder == null)
                 viewHolder = new SparseArray<>();
 
             View childView = viewHolder.get(id);
             if (childView == null) {
-                childView = view.findViewById(id);
+                childView = itemView.findViewById(id);
                 viewHolder.put(id, childView);
             }
             return (T) childView;
