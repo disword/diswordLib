@@ -24,6 +24,8 @@
         <activity
             android:name=".demo.pages.auth.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".demo.pages.viewpager.LoopPagerActivity" />
+        <activity android:name=".demo.pages.search.SearchListActivity"></activity>
     </application>
 
 </manifest>

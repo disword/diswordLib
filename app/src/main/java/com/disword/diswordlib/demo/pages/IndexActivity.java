@@ -11,6 +11,7 @@ import com.disword.diswordlib.R;
 import com.disword.diswordlib.core.util.MySimpleAdapter;
 import com.disword.diswordlib.demo.entity.IndexData;
 import com.disword.diswordlib.demo.pages.auth.LoginActivity;
+import com.disword.diswordlib.demo.pages.search.SearchListActivity;
 import com.disword.diswordlib.demo.pages.viewpager.LoopPagerActivity;
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private void addData() {
-        Class<?>[] clsGroup = {LoginActivity.class, LoopPagerActivity.class};
-        String[] clsNames = {"登陆", "viewpager循环"};
+        Class<?>[] clsGroup = {LoginActivity.class, LoopPagerActivity.class, SearchListActivity.class};
+        String[] clsNames = {"登陆", "viewpager循环", "搜索框列表"};
         for (int i = 0; i < clsGroup.length; i++) {
             IndexData indexData = new IndexData();
             indexData.cls = clsGroup[i];
