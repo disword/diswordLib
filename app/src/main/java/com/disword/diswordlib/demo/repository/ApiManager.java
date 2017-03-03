@@ -55,7 +55,7 @@ public class ApiManager {
                         Observable.just(new UserInfo()) :
                         Observable.<UserInfo>error(new NullPointerException("Token is null"));
             }
-        }).retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+        }).compose(this.<UserInfo>applySchedulers()).retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
             @Override
             public Observable<?> call(Observable<? extends Throwable> observable) {
                 return observable.flatMap(new Func1<Throwable, Observable<?>>() {
@@ -67,7 +67,7 @@ public class ApiManager {
                     }
                 });
             }
-        }).compose(applySchedulers(UserInfo.class)).retryWhen(new RetryWithDelay(context, retryCount, retryTime));
+        }).retryWhen(new RetryWithDelay(context, retryCount, retryTime));
     }
 
     /**
@@ -80,7 +80,7 @@ public class ApiManager {
         return true;
     }
 
-    private <T> Observable.Transformer<T, T> applySchedulers(Class<T> t) {
+    private <T> Observable.Transformer<T, T> applySchedulers() {
         return new Observable.Transformer<T, T>() {
             @Override
             public Observable<T> call(Observable<T> observable) {
